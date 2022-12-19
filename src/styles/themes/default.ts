@@ -1,74 +1,21 @@
 export const defaultTheme = {
-  colors: {
-    primary: "#000000",
-    secondary: "#ffffff",
-    background: "#ffffff",
-    text: "#000000",
-    border: "#000000",
-    notification: "#000000",
-  },
-  spacing: {
-    xs: 4,
-    s: 8,
-    m: 16,
-    l: 24,
-    xl: 40,
-  },
-  borderRadius: {
-    s: 4,
-    m: 10,
-    l: 25,
-    round: 50,
-  },
-  textVariants: {
-    hero: {
-      fontSize: 70,
-      lineHeight: 80,
-      fontWeight: "bold",
-      color: "background",
-      textAlign: "center",
-    },
-    title1: {
-      fontSize: 28,
-      lineHeight: 30,
-      fontWeight: "bold",
-      color: "text",
-    },
-    title2: {
-      fontSize: 24,
-      lineHeight: 26,
-      fontWeight: "bold",
-      color: "text",
-    },
-    title3: {
-      fontSize: 20,
-      lineHeight: 22,
-      fontWeight: "bold",
-      color: "text",
-    },
-    body: {
-      fontSize: 16,
-      lineHeight: 26,
-      fontWeight: "normal",
-      color: "text",
-    },
-    button: {
-      fontSize: 15,
-      lineHeight: 20,
-      fontWeight: "500",
-      color: "text",
-    },
-    caption: {
-      fontSize: 13,
-      lineHeight: 16,
-      fontWeight: "normal",
-      color: "text",
-    },
-    overline: {
-      fontSize: 10,
-      lineHeight: 15,
-      fontWeight: "500",
-      color: "text",
-    },
-  },
-};
+  white: '#FFF',
+
+  'gray-100': '#E1E1E6',
+  'gray-300': '#C4C4CC',
+  'gray-400': '#8D8D99',
+  'gray-500': '#7C7C8A',
+  'gray-600': '#323238',
+  'gray-700': '#29292E',
+  'gray-800': '#202024',
+  'gray-900': '#121214',
+
+  'blue-300': '#2ab7cf',
+  'blue-500': '#00D8FF',
+  'blue-700': '#00A3CC',
+
+  'red-500': '#AB222E',
+  'red-700': '#7A1921',
+
+  'yellow-500': '#FBA94C',
+}
