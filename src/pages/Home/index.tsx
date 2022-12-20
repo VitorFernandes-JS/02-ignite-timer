@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Play } from "phosphor-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,7 +29,17 @@ interface NewCycleFormData {
   minutesAmount: number;
 }
 
+interface Cycle {
+  id: string;
+  task: string;
+  minutesAmount: number;
+}
+
 export function Home() {
+  const [cycles, setCycles] = useState<Cycle[]>([]);
+  const [activeCycleId, setActiveCycleId] = useState<string | null>(null); // colocamos que ele pode ser string ou null pois quando não tiver nenhum ciclo ativo, ele não vai ter nenhum id
+  const [amountSecondsPassed, setAmountSecondsPassed] = useState(0); // Contador de segundos passados
+
   const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
     resolver: zodResolver(newCicleFormValidationSchema),
     defaultValues: {
@@ -38,9 +49,29 @@ export function Home() {
   });
 
   function handleCreateNewCycle(data: NewCycleFormData) {
-    console.log(data);
+    const newCycle: Cycle = {
+      id: new Date().getTime().toString(),
+      task: data.task,
+      minutesAmount: data.minutesAmount,
+    };
+
+    setCycles((state) => [...state, newCycle]); // Adiciona o novo ciclo no estado, estou usando a palavra state para representar o estado anterior
+    setActiveCycleId(newCycle.id);
+
     reset();
   }
+
+  const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId); // Encontra o ciclo ativo
+
+  const totalSeconds = activeCycle ? activeCycle.minutesAmount * 60 : 0; // Calcula o total de segundos do ciclo ativo
+  const currentSeconds = activeCycle ? totalSeconds - amountSecondsPassed : 0; // Calcula os segundos atuais
+
+  const minutes = Math.floor(currentSeconds / 60); // Calcula os minutos atuais, usamos o Math.floor para arredondar para baixo, pois não faz sentido exibir valores decimais
+  const seconds = currentSeconds % 60; // Calcula os segundos atuais
+  const minutesLeft = String(minutes).padStart(2, "0"); // Calcula os minutos restantes, usamos o padStart para preencher com 0 a esquerda caso o valor seja menor que 10
+  const secondsLeft = String(seconds).padStart(2, "0"); // Calcula os segundos restantes, usamos o padStart para preencher com 0 a esquerda caso o valor seja menor que 10
+
+  
 
   const task = watch("task");
   const minutesAmount = watch("minutesAmount");
@@ -82,11 +113,11 @@ export function Home() {
         </FormContainer>
 
         <CountdownContainer>
-          <span>0</span>
-          <span>0</span>
+          <span>{minutesLeft[0]}</span> {/* Pega o primeiro caractere dos minutos */}
+          <span>{minutesLeft[1]}</span> {/* Pega o segundo caractere dos minutos */}
           <Separator>:</Separator>
-          <span>0</span>
-          <span>0</span>
+          <span>{secondsLeft[0]}</span> {/* Pega o primeiro caractere dos segundos */}
+          <span>{secondsLeft[1]}</span> {/* Pega o segundo caractere dos segundos */}
         </CountdownContainer>
 
         <StartCountdownButton disabled={!task || !minutesAmount} type="submit">
